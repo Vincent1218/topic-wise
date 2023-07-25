@@ -1,8 +1,8 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-import {Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 export default function Login() {
-  const [serverRes, setServerRes] = useState("null");
+  const [serverRes, setServerRes] = useState(" ");
   async function signup(email, password) {
     const userData = { email, password };
     console.log("sending user data", userData);
@@ -15,10 +15,15 @@ export default function Login() {
       },
       body: JSON.stringify(userData),
     });
-    console.log("response", response);
-    const data = await response.json();
+    // console.log(response)
+
+    const data = await response.json()
+    if (!response.ok) {
+      setServerRes(data.message);
+      return;
+    }
     console.log("data received", data);
-    setServerRes(data);
+    setServerRes(`User with id:${data._id} is logged in`);
   }
   return (
     <div>
@@ -53,8 +58,11 @@ export default function Login() {
           </Form>
         )}
       </Formik>
-      <p>If you don&apos;t have an account already <Link to="/signup">Sign up</Link></p>
-      <div>{JSON.stringify(serverRes)}</div>
+      <p>
+        If you don&apos;t have an account already{" "}
+        <Link to="/signup">Sign up</Link>
+      </p>
+      <div>{serverRes !== " " ? JSON.stringify(serverRes) : <p>User not logged in</p>}</div>
     </div>
   );
 }
