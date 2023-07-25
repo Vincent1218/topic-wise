@@ -1,11 +1,12 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const connectDB = require("./config/db");
 const postRouter = require('./routes/api/posts');
 const userRouter = require('./routes/api/user')
 // middleware for parsing json objects
 app.use(express.json());
-
+app.use(cors());
 
 // routes
 app.use('/api/users', userRouter);
