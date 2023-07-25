@@ -10,6 +10,8 @@ import Dashboard from "./routes/Dashboard";
 
 //import loaders
 import { loader as postLoader } from "./routes/Dashboard";
+
+const userId = "64bfaa2fa6cbfb1884946975";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,7 +29,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: <Dashboard userId={userId} />,
     loader: postLoader,
     errorElement: <ErrorPage />,
   },

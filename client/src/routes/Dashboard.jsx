@@ -1,18 +1,22 @@
 import { useLoaderData } from "react-router-dom";
-export default function Dashboard() {
+import UploadFile from "../components/UploadFile";
+export default function Dashboard({userId}) {
   const userPosts = useLoaderData();
   return (
     <div>
       <h1>Dashboard</h1>
       <h2> Your Posts</h2>
-      {userPosts.map((post) => {
-        return (
-          <div key={post._id}>
-            <h3>{post.title}</h3>
-            <p>{post.content}</p>
-          </div>
-        );
-      })}
+      <div style={{ display: "flex" }}>
+        {userPosts.map((post) => {
+          return (
+            <div key={post._id}>
+              <h3>{post.title}</h3>
+              <p>{post.content}</p>
+            </div>
+          );
+        })}
+      </div>
+      <UploadFile userId={userId}/>
     </div>
   );
 }
