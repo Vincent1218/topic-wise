@@ -10,6 +10,7 @@ import Dashboard from "./routes/Dashboard";
 
 //import loaders
 import { loader as postLoader } from "./routes/Dashboard";
+import Login from "./routes/Login";
 
 const userId = "64bfaa2fa6cbfb1884946975";
 const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
   {
     path: "/dashboard",

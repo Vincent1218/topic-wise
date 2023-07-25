@@ -46,8 +46,29 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// signin an existing user
+//login an existing user
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ message: "Please provide both email and password" });
+    }
 
-//
-
+    const existingUser = await User.findOne({ email: email }).exec();
+    if (!existingUser) {
+      return res.status(400).json({ message: "User does not exist" });
+    }
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+    res.status(200).json(existingUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error while logging in" });
+  }
+});
 module.exports = router;

@@ -1,11 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-export default function Signup() {
+import {Link } from 'react-router-dom'
+export default function Login() {
   const [serverRes, setServerRes] = useState("null");
   async function signup(email, password) {
     const userData = { email, password };
     console.log("sending user data", userData);
-    const response = await fetch("http://localhost:8082/api/users/signup", {
+    const response = await fetch("http://localhost:8082/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +22,7 @@ export default function Signup() {
   }
   return (
     <div>
-      <h1>Sign up</h1>
+      <h1>Login </h1>
       <Formik
         initialValues={{ email: "", password: "" }}
         validate={(values) => {
@@ -52,6 +53,7 @@ export default function Signup() {
           </Form>
         )}
       </Formik>
+      <p>If you don&apos;t have an account already <Link to="/signup">Sign up</Link></p>
       <div>{JSON.stringify(serverRes)}</div>
     </div>
   );
