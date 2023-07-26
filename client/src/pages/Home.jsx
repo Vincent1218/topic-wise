@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import UploadFile from "../components/UploadFile";
+import Navbar from "../components/Navbar";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -59,26 +60,22 @@ const Home = () => {
   };
   return (
     <div>
-      <div className="home_page">
-        <h4>
-          {" "}
-          Welcome <span>{username}</span>
-        </h4>
-        <button onClick={Logout}>LOGOUT</button>
-        <h1>Dashboard</h1>
-        <h2> Your Posts</h2>
-        <div style={{ display: "flex" }}>
-          {userPosts.map((post) => {
-            return (
-              <div key={post._id}>
-                <h3>{post.title}</h3>
-                <p>{post.content}</p>
-              </div>
-            );
-          })}
-        </div>
-        <UploadFile userId={userId} />
+      <Navbar user={username} onLogout={Logout} />
+      <h2 className="text-2xl font-normal tracking-tight text-gray-900">
+        {" "}
+        {username}&apos;s Posts
+      </h2>
+      <div style={{ display: "flex" }}>
+        {userPosts.map((post) => {
+          return (
+            <div key={post._id}>
+              <h3>{post.title}</h3>
+              <p>{post.content}</p>
+            </div>
+          );
+        })}
       </div>
+      <UploadFile userId={userId} />
       <ToastContainer />
     </div>
   );
