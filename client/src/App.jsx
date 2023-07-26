@@ -6,7 +6,7 @@ import ErrorBoundary from "./pages/ErrorPage";
 import { Route, Routes } from "react-router-dom";
 function App() {
   return (
-    <div>
+    <div className="">
       <ErrorBoundary>
         <Routes>
           <Route path="/" element={<Home />} />

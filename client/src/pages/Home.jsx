@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
+
+//components
 import UploadFile from "../components/UploadFile";
 import Navbar from "../components/Navbar";
-
+import EssayCard from "../components/EssayCard";
 const Home = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
@@ -61,21 +63,20 @@ const Home = () => {
   return (
     <div>
       <Navbar user={username} onLogout={Logout} />
-      <h2 className="text-2xl font-normal tracking-tight text-gray-900">
-        {" "}
-        {username}&apos;s Posts
-      </h2>
-      <div style={{ display: "flex" }}>
-        {userPosts.map((post) => {
-          return (
-            <div key={post._id}>
-              <h3>{post.title}</h3>
-              <p>{post.content}</p>
-            </div>
-          );
-        })}
+      <div className="grid grid-cols-3">
+        <div className="col-span-2 flex flex-col mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-normal tracking-tight text-gray-900">
+            {" "}
+            {username}&apos;s Posts
+          </h2>
+          <div className="flex flex-col">
+            {userPosts.map((post) => {
+              return <EssayCard key={post._id} post={post} />;
+            })}
+          </div>
+        </div>
+        <UploadFile userId={userId} />
       </div>
-      <UploadFile userId={userId} />
       <ToastContainer />
     </div>
   );
