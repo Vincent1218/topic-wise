@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
@@ -12,6 +13,14 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   posts: [postSchema],
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
+});
+
+userSchema.pre("save", async function () {
+  this.password = await bcrypt.hash(this.password, 12);
 });
 
 const User = mongoose.model("User", userSchema);
