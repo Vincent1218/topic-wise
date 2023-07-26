@@ -13,11 +13,11 @@ router.get("/:userId", async (req, res) => {
     if (!user) {
       return res.status(404).send("User not found");
     }
-    console.log(user);
+    // console.log(user);
     const posts = user.posts;
     res.status(200).json(posts);
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).send({
       message: `Server Error fetching posts for User with ID : ${userId}`,
     });
@@ -47,7 +47,7 @@ router.post("/", async (req, res) => {
       .status(200)
       .json(`Post created with id ${newPost._id} for User with id ${userId}`);
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).send({
       message: `Server Error creating post for User with ID : ${userId}`,
     });

@@ -76,9 +76,9 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "User does not exist" });
     }
     const hashedPassword = existingUser.password;
-    console.log("hashedPassword", hashedPassword);
+    // console.log("hashedPassword", hashedPassword);
     const isMatch = await bcrypt.compare(password, hashedPassword);
-    console.log("isMatch", isMatch);
+    // console.log("isMatch", isMatch);
     if (!isMatch) {
       return res.status(402).json({ message: "Invalid credentials" });
     }

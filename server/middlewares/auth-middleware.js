@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const userVerification = async (req, res, next) => {
   const token = req.cookies.token;
-  console.log(token);
+  // console.log(token);
   if (!token) {
     return res
       .status(401)
@@ -17,7 +17,7 @@ const userVerification = async (req, res, next) => {
     } else {
       const user = await User.findById(decoded.id);
       if (user) {
-        req.user = user.email; // set the user object in the request
+        req.user = user; // set the user object in the request
         next();
       } else {
         return res.json({ status: false });
