@@ -29,7 +29,9 @@ router.post("/signup", async (req, res) => {
     //checking if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+      return res
+        .status(400)
+        .json({ success: false, message: "User already exists" });
     }
     // console.log("reached hashing");
     // hash the password
@@ -40,13 +42,20 @@ router.post("/signup", async (req, res) => {
 
     const user = await User.create({ email, password }); //save user to database
     const token = createSecretToken(user._id);
-    res.cookie("token", token, { httpOnly: true, withCredentials: true });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "None",
+      withCredentials: true,
+    });
     res
       .status(201)
       .json({ message: "User signed up successfully", success: true, user });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Error while creating user" });
+    res
+      .status(500)
+      .json({ success: false, message: "Error while creating user" });
   }
 });
 

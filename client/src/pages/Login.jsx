@@ -1,29 +1,46 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
+  const navigate = useNavigate();
   const [serverRes, setServerRes] = useState(" ");
+  const handleError = (err) =>
+    toast.error(err, {
+      position: "bottom-left",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "bottom-left",
+    });
+
   async function signup(email, password) {
     const userData = { email, password };
-    console.log("sending user data", userData);
-    const response = await fetch("http://localhost:8082/api/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Headers":
-          "Content-Type, Access-Control-Allow-Headers, X-Requested-With, Authorization",
-      },
-      body: JSON.stringify(userData),
-    });
-    // console.log(response)
+    // console.log("sending user data", userData);
+    try {
+      const response = await fetch("http://localhost:8082/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(userData),
+      });
+      // console.log(response)
 
-    const data = await response.json()
-    if (!response.ok) {
-      setServerRes(data.message);
-      return;
+      const data = await response.json();
+      const { success, message } = data;
+      if (success) {
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        handleError(message);
+      }
+    } catch (error) {
+      console.log(error);
     }
-    console.log("data received", data);
-    setServerRes(`User with id:${data._id} is logged in`);
   }
   return (
     <div>
@@ -62,7 +79,14 @@ export default function Login() {
         If you don&apos;t have an account already{" "}
         <Link to="/signup">Sign up</Link>
       </p>
-      <div>{serverRes !== " " ? JSON.stringify(serverRes) : <p>User not logged in</p>}</div>
+      <div>
+        {serverRes !== " " ? (
+          JSON.stringify(serverRes)
+        ) : (
+          <p>User not logged in</p>
+        )}
+      </div>
+      <ToastContainer />
     </div>
   );
 }

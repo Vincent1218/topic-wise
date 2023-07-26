@@ -1,23 +1,45 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 export default function Signup() {
+  const navigate = useNavigate();
   const [serverRes, setServerRes] = useState("null");
+  const handleError = (err) =>
+    toast.error(err, {
+      position: "bottom-left",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "bottom-right",
+    });
+
   async function signup(email, password) {
     const userData = { email, password };
-    console.log("sending user data", userData);
-    const response = await fetch("http://localhost:8082/api/users/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Headers":
-          "Content-Type, Access-Control-Allow-Headers, X-Requested-With, Authorization",
-      },
-      body: JSON.stringify(userData),
-    });
-    console.log("response", response);
-    const data = await response.json();
-    console.log("data received", data);
-    setServerRes(data);
+    // console.log("sending user data", userData);
+    try {
+      const response = await fetch("http://localhost:8082/api/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Headers":
+            "Content-Type, Access-Control-Allow-Headers, X-Requested-With, Authorization",
+        },
+        body: JSON.stringify(userData),
+      });
+      const data = await response.json();
+      const { success, message } = data;
+      if (success) {
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        handleError(message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
   return (
     <div>
@@ -53,6 +75,7 @@ export default function Signup() {
         )}
       </Formik>
       <div>{JSON.stringify(serverRes)}</div>
+      <ToastContainer />
     </div>
   );
 }
