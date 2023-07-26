@@ -13,6 +13,7 @@ const Home = () => {
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");
   const [userPosts, setUserPosts] = useState([]);
+  const [uploadedNew, setUploadedNew] = useState(false);
   useEffect(() => {
     const verifyCookie = async () => {
       if (!cookies.token) {
@@ -54,7 +55,7 @@ const Home = () => {
     };
     getPosts();
     console.log(userPosts);
-  }, [userId]);
+  }, [uploadedNew]);
 
   const Logout = () => {
     removeCookie("token");
@@ -64,7 +65,7 @@ const Home = () => {
     <div>
       <Navbar user={username} onLogout={Logout} />
       <div className="grid grid-cols-3">
-        <div className="col-span-2 flex flex-col mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col col-span-2 px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <h2 className="text-2xl font-normal tracking-tight text-gray-900">
             {" "}
             {username}&apos;s Posts
@@ -75,7 +76,7 @@ const Home = () => {
             })}
           </div>
         </div>
-        <UploadFile userId={userId} />
+        <UploadFile userId={userId} setUploadedNew={setUploadedNew} />
       </div>
       <ToastContainer />
     </div>

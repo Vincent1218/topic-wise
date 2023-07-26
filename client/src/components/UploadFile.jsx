@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 
-export default function UploadFile({ userId }) {
+export default function UploadFile({ setUploadedNew, userId }) {
   const formik = useFormik({
     initialValues: {
       file: "",
@@ -33,7 +33,7 @@ export default function UploadFile({ userId }) {
       });
 
       const data = await response.json();
-      console.log("Data received:", data);
+      setUploadedNew(true);
     },
   });
 
@@ -56,12 +56,12 @@ export default function UploadFile({ userId }) {
   };
 
   return (
-    <div className="max-w-lg mx-auto my-10 p-6 bg-white rounded shadow-md">
-      
+    <div className="max-w-lg p-6 mx-auto my-10 bg-white rounded shadow-md">
+
       <form onSubmit={formik.handleSubmit}>
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="file"
           >
             File
@@ -72,15 +72,15 @@ export default function UploadFile({ userId }) {
             type="file"
             accept=".txt"
             onChange={handleFileChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           />
           {formik.errors.file && formik.touched.file && (
-            <p className="text-red-500 text-xs italic">{formik.errors.file}</p>
+            <p className="text-xs italic text-red-500">{formik.errors.file}</p>
           )}
         </div>
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="title"
           >
             Title
@@ -92,15 +92,15 @@ export default function UploadFile({ userId }) {
             placeholder="Title"
             onChange={formik.handleChange}
             value={formik.values.title}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           />
           {formik.errors.title && formik.touched.title && (
-            <p className="text-red-500 text-xs italic">{formik.errors.title}</p>
+            <p className="text-xs italic text-red-500">{formik.errors.title}</p>
           )}
         </div>
         <div className="flex items-center justify-between">
           <button
-            className="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
             type="submit"
           >
             Submit
