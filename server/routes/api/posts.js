@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
 
   const userId = req.body.userId;
   const postData = req.body.post;
-  console.log(postData.content)
+  // console.log(postData.content)
   try {
     const user = await User.findById(userId);
     if (!user) {
