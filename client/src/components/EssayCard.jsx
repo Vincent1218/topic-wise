@@ -1,12 +1,14 @@
+import {Link} from 'react-router-dom'
 const postScores = [
   { heading: "DGI", value: 0.5 },
   { heading: "DEI", value: 0.5 },
   { heading: "DII", value: 0.5 },
 ];
 
-export default function EssayCard({ post }) {
+export default function EssayCard({userId, post }) {
   const contentPreview = post.content.slice(0, 150) + "...";
   return (
+    <Link to = {`${userId}/post/${post._id}`}>
     <div className="max-w-md  bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
       <div className="md:flex">
         <div className="md:flex-shrink-0 p-2">
@@ -30,5 +32,6 @@ export default function EssayCard({ post }) {
         </div>
       </div>
     </div>
+    </Link>
   );
 }

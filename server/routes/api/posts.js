@@ -53,5 +53,32 @@ router.post("/", async (req, res) => {
     });
   }
 });
+// Get a post by ID
+router.get("/:userId/post/:postId", async (req, res) => {
+  console.log('hello')
+  try {
+    const userId = req.params.userId;
+    const postId = req.params.postId;
+    
+    // find user
+    const user = await User.findById(userId);
+    // console.log(user)
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // find post for user
+    const post =  user.posts.id(postId);
+    // console.log(post)
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(500).send({
+      message: `Server Error fetching post with ID : ${postId}`,
+    });
+  }
+});
 
 module.exports = router;

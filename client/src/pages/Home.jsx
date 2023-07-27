@@ -55,7 +55,7 @@ const Home = () => {
     };
     getPosts();
     console.log(userPosts);
-  }, [uploadedNew]);
+  }, [uploadedNew, userId]);
 
   const Logout = () => {
     removeCookie("token");
@@ -72,7 +72,7 @@ const Home = () => {
           </h2>
           <div className="flex flex-col">
             {userPosts.map((post) => {
-              return <EssayCard key={post._id} post={post} />;
+              return <EssayCard userId={userId} key={post._id} post={post} />;
             })}
           </div>
         </div>

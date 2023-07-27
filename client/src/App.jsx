@@ -2,6 +2,7 @@ import "./App.css";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
+import Post from './pages/Post'
 import ErrorBoundary from "./pages/ErrorPage";
 import { Route, Routes } from "react-router-dom";
 function App() {
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path=":userId/post/:id" element={<Post />} />
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         </Routes>
       </ErrorBoundary>
