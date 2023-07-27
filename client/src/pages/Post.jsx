@@ -43,7 +43,7 @@ const PostPage = () => {
     <div>
       <Navbar />
       <div className="grid grid-cols-3 px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="flex flex-col p-4 h-min bg-gray-100 rounded">
+        <div className="flex flex-col p-4 h-min bg-gray-100 shadow-md rounded">
           <button
             className={`text-left px-4 py-2 mb-2 block w-full rounded 
             ${

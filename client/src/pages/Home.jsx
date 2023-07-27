@@ -38,7 +38,7 @@ const Home = () => {
         : (removeCookie("token"), navigate("/login"));
     };
     verifyCookie();
-  }, []);
+  },[]);
   useEffect(() => {
     const getPosts = async () => {
       const response = await fetch(
@@ -76,6 +76,7 @@ const Home = () => {
             })}
           </div>
         </div>
+        
         <UploadFile userId={userId} setUploadedNew={setUploadedNew} />
       </div>
       <ToastContainer />
