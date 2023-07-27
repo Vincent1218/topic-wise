@@ -1,8 +1,8 @@
 import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-
-const navigation = [{ name: "Home", href: "#", current: true }];
+import { Link } from "react-router-dom";
+const navigation = [{ name: "Home", href: "/", current: true }];
 const userNavigation = [
   { name: "Your Profile", href: "#" },
   { name: "Settings", href: "#" },
@@ -45,9 +45,9 @@ export default function Navbar({ username, onLogout }) {
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
-                          <a
+                          <Link
                             key={item.name}
-                            href={item.href}
+                            to={item.href}
                             className={classNames(
                               item.current
                                 ? "bg-indigo-900 text-white"
@@ -57,7 +57,7 @@ export default function Navbar({ username, onLogout }) {
                             aria-current={item.current ? "page" : undefined}
                           >
                             {item.name}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     </div>

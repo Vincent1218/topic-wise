@@ -55,7 +55,7 @@ router.post("/", async (req, res) => {
 });
 // Get a post by ID
 router.get("/:userId/post/:postId", async (req, res) => {
-  console.log('hello')
+  // console.log('hello')
   try {
     const userId = req.params.userId;
     const postId = req.params.postId;
