@@ -5,8 +5,7 @@ import Navbar from "../components/Navbar";
 // Import your other components
 import Scores from "../components/Scores";
 //... more components
-
-const PostPage = () => {
+export default function PostPage() {
   const { userId, id } = useParams();
 
   const navigate = useNavigate();
@@ -89,7 +88,7 @@ const PostPage = () => {
                   {/* Add any other post details you want to display here */}
                 </>
               )}
-              {option === "component1" && <Scores />}
+              {option === "component1" && <Scores postScores={post.scores}/>}
               {option === "component2" && <Scores />}
               {/* Render more components based on the selected option */}
             </div>
@@ -98,6 +97,5 @@ const PostPage = () => {
       </div>
     </div>
   );
-};
+}
 
-export default PostPage;

@@ -25,7 +25,7 @@ const query = async (sentence) => {
 router.post("/", async (req, res) => {
   const { postId, userId, content } = req.body;
   // assuming paragraphs are separated by two newline characters
-  const paragraphs = content.split("\n\n");
+  const paragraphs = content.split(/\n+/);
   // array to store disciplines in each paragraph
   const paragraphDisciplines = [];
   let totalSentences = 0;

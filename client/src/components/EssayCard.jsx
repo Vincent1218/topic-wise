@@ -1,37 +1,37 @@
-import {Link} from 'react-router-dom'
-const postScores = [
-  { heading: "DGI", value: 0.5 },
-  { heading: "DEI", value: 0.5 },
-  { heading: "DII", value: 0.5 },
-];
+import { Link } from "react-router-dom";
 
-export default function EssayCard({userId, post }) {
+export default function EssayCard({ userId, post }) {
   const contentPreview = post.content.slice(0, 150) + "...";
+  const postScores = post.scores.essayMetrics;
   return (
-    <Link to = {`${userId}/post/${post._id}`}>
-    <div className="max-w-md  bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
-      <div className="md:flex">
-        <div className="md:flex-shrink-0 p-2">
-          
-        </div>
-        <div className="p-8">
-          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-            {post.title}
-          </div>
-          <p className="block mt-1 text-lg leading-tight font-medium text-black">
-            {contentPreview}
-          </p>
-          <div className="mt-2 flex items-center text-sm text-gray-500">
-            {postScores.map((score, index) => (
-              <div key={index} className="mr-3">
-                <div>{score.heading}</div>
-                <div className="font-bold">{score.value}</div>
+    <Link to={`${userId}/post/${post._id}`}>
+      <div className="max-w-md  bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
+        <div className="md:flex">
+          <div className="md:flex-shrink-0 p-2"></div>
+          <div className="p-8">
+            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+              {post.title}
+            </div>
+            <p className="block mt-1 text-lg leading-tight font-medium text-black">
+              {contentPreview}
+            </p>
+            <div className="mt-2 flex items-center text-sm text-gray-500">
+              <div className="mr-3">
+                <div>DGI</div>
+                <div className="font-bold">{postScores.DGI}</div>
               </div>
-            ))}
+              <div className="mr-3">
+                <div>DEI</div>
+                <div className="font-bold">{postScores.DEI}</div>
+              </div>
+              <div className="mr-3">
+                <div>DII</div>
+                <div className="font-bold">{postScores.DII}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </Link>
   );
 }

@@ -34,6 +34,7 @@ router.post("/", async (req, res) => {
 
   const userId = req.body.userId;
   const postData = req.body.post;
+  console.log(postData.content)
   try {
     const user = await User.findById(userId);
     if (!user) {
@@ -45,7 +46,7 @@ router.post("/", async (req, res) => {
 
     return res
       .status(200)
-      .json(`Post created with id ${newPost._id} for User with id ${userId}`);
+      .json({ postId: newPost._id, message: "Post created successfully." });
   } catch (err) {
     // console.log(err.message);
     res.status(500).send({
@@ -59,7 +60,7 @@ router.get("/:userId/post/:postId", async (req, res) => {
   try {
     const userId = req.params.userId;
     const postId = req.params.postId;
-    
+
     // find user
     const user = await User.findById(userId);
     // console.log(user)
@@ -68,7 +69,7 @@ router.get("/:userId/post/:postId", async (req, res) => {
     }
 
     // find post for user
-    const post =  user.posts.id(postId);
+    const post = user.posts.id(postId);
     // console.log(post)
     if (!post) {
       return res.status(404).send("Post not found");
