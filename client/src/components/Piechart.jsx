@@ -25,7 +25,7 @@ export default function PieChart({ disciplineData }) {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center  h-[400px]">
+    <div className="flex flex-col justify-center items-center max-h-[400px]">
       <h1 className="text-3xl font-bold">Topic Outline</h1>
       <Pie data={chartData} />
     </div>
