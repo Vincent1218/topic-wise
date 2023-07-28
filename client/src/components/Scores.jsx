@@ -10,7 +10,7 @@ export default function Scores({ postScores }) {
       <h1 className="text-4xl font-bold mb-4">Topic Classification Scores</h1>
       <div className="grid grid-cols-3 gap-2">
         <div className="flex flex-col col-span-2">
-          <div className=" border-indigo-400 border-2  p-4 rounded">
+          <div className=" border-indigo-400 border-2 my-2  p-4 rounded">
             <h2 className="text-xl font-bold">Disciplinary Grounding Index</h2>{" "}
             <p className="my-2">
               Number of unique disciplines = {essayMetrics.numUniqueDisciplines}
@@ -24,7 +24,7 @@ export default function Scores({ postScores }) {
               = {essayMetrics.DGI}
             </p>
           </div>
-          <div className=" border-indigo-400 border-2  p-4 rounded">
+          <div className=" border-indigo-400 border-2  my-2  p-4 rounded">
             <h2 className="text-xl font-bold">
               Disciplinary Integration Index
             </h2>{" "}
@@ -41,7 +41,7 @@ export default function Scores({ postScores }) {
               paragraphs<br></br> = {essayMetrics.DII}
             </p>
           </div>
-          <div className=" border-indigo-400 border-2  p-4 rounded">
+          <div className=" border-indigo-400 border-2  my-2  p-4 rounded">
             <h2 className="text-xl font-bold">Disciplinary Evenness Index</h2>
             <h2 className="text-xl font-bold">
               Disciplinary Integration Index

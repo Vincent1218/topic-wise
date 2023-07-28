@@ -5,7 +5,7 @@ export default function EssayCard({ userId, post }) {
   const postScores = post.scores.essayMetrics;
   return (
     <Link to={`${userId}/post/${post._id}`}>
-      <div className="max-w-md  bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
+      <div className="max-w-md  bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-3">
         <div className="md:flex">
           <div className="md:flex-shrink-0 p-2"></div>
           <div className="p-8">

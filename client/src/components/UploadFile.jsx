@@ -84,6 +84,7 @@ export default function UploadFile({ setUploadedNew, userId }) {
 
   return (
     <div className="max-w-lg h-min p-6 mx-auto my-10 bg-white rounded shadow-md">
+      <h1 className="text-2xl font-bold text-center mb-4">Upload Your Essay</h1>
       <form onSubmit={formik.handleSubmit}>
         <div className="mb-4">
           <label

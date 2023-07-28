@@ -15,7 +15,7 @@ disciplines.forEach((discipline) => (disciplineCounts[discipline] = 0));
 // Custom rounding function to round to a specific number of decimal places
 function roundDecimal(num, places) {
   const rounded = Math.round(num * 10 ** places) / 10 ** places;
-  console.log(num, "is now ", rounded, " rounded to ", places, " places.");
+  // console.log(num, "is now ", rounded, " rounded to ", places, " places.");
   return rounded;
 }
 
@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
 
   // calculating percentage of each discipline
   const percentages = {};
-  console.log(disciplineCounts)
+  // console.log(disciplineCounts)
   const totalClassified = Object.values(disciplineCounts).reduce(
     (a, b) => a + b,
     0
