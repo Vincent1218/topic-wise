@@ -10,6 +10,7 @@ const classifyRouter = require("./routes/api/classify");
 // middleware for parsing json objects
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static("public"));
 // routes
 app.use(
   cors({
