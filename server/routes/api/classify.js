@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
       // Loop over all labels and scores
       for (let i = 0; i < result.labels.length; i++) {
         // Check if the score is within 50% of the max score
-        if (result.scores[i] >= 0.5 * maxScore) {
+        if (result.scores[i] >= 0.6 * maxScore) {
           const discipline = result.labels[i];
           disciplineCounts[discipline] += 1;
           currentParagraphDisciplines.add(discipline);
@@ -71,6 +71,7 @@ router.post("/", async (req, res) => {
       2
     );
   }
+  // FIX BUG WHERE DISCIPLINE >= 1
   const uniqueDisciplines = Object.keys(disciplineCounts).length;
   const DGI = roundDecimal(
     (uniqueDisciplines / paragraphs.length) * 100,

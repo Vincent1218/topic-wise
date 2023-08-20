@@ -38,7 +38,7 @@ export default function Scores({ postScores }) {
             <p className="my-2">
               {" "}
               DGI = Number of paragraphs with more than 1 discipline/Number of
-              paragraphs<br></br> = {essayMetrics.DII}
+              paragraphs<br></br> = {essayMetrics.DII/100}
             </p>
           </div>
           <div className=" border-indigo-400 border-2  my-2  p-4 rounded">

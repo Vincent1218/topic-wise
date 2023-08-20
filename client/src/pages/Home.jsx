@@ -71,7 +71,7 @@ const Home = () => {
             {username}&apos;s Posts
           </h2>
           <div className="flex flex-col">
-            {(userPosts===[]) ? (
+            {userPosts.length !== 0 ? (
               userPosts.map((post) => {
                 return <EssayCard userId={userId} key={post._id} post={post} />;
               })
