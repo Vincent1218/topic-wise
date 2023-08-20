@@ -14,8 +14,7 @@ app.use(express.static("public"));
 // app.use(
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://askwaai.azurewebsites.net",
-  "https://askwaai.com",
+  "https://essay-evaluator-app.azurewebsites.net",
 ];
 app.use(
   cors({
