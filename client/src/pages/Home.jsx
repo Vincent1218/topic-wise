@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import UploadFile from "../components/UploadFile";
 import Navbar from "../components/Navbar";
 import EssayCard from "../components/EssayCard";
+import { BACKEND_URL } from "../../config";
 const Home = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
@@ -19,7 +20,7 @@ const Home = () => {
       if (!cookies.token) {
         navigate("/login");
       }
-      const response = await fetch("http://localhost:8082/api/verify", {
+      const response = await fetch(`${BACKEND_URL}/api/verify`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -41,16 +42,14 @@ const Home = () => {
   }, []);
   useEffect(() => {
     const getPosts = async () => {
-      const response = await fetch(
-        `http://localhost:8082/api/posts/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${BACKEND_URL}/api/posts/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await response.json();
+      console.log("Data", data);
       setUserPosts(data);
     };
     getPosts();
@@ -71,7 +70,7 @@ const Home = () => {
             {username}&apos;s Posts
           </h2>
           <div className="flex flex-col">
-            {userPosts.length !== 0 ? (
+            {userPosts.length > 0 ? (
               userPosts.map((post) => {
                 return <EssayCard userId={userId} key={post._id} post={post} />;
               })

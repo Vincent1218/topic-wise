@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import { useState } from "react";
+import { BACKEND_URL } from "../../config";
 export default function UploadFile({ setUploadedNew, userId }) {
   const [created, setCreated] = useState(false);
   const [analysed, setAnalysed] = useState(false);
@@ -23,7 +24,7 @@ export default function UploadFile({ setUploadedNew, userId }) {
     onSubmit: async (values) => {
       setLoading(true);
       console.log("values", values);
-      const response = await fetch("http://localhost:8082/api/posts", {
+      const response = await fetch(`${BACKEND_URL}/api/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,20 +41,17 @@ export default function UploadFile({ setUploadedNew, userId }) {
       const data = await response.json();
       console.log("data", data);
       const { postId } = data; // Once the post is created, then call your classification API
-      const classifyResponse = await fetch(
-        "http://localhost:8082/api/classify",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: userId,
-            postId: postId,
-            content: values.content,
-          }),
-        }
-      );
+      const classifyResponse = await fetch(`${BACKEND_URL}/api/classify`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          postId: postId,
+          content: values.content,
+        }),
+      });
 
       // const classifyData = await classifyResponse.json();
       setAnalysed(true);

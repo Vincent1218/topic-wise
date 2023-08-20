@@ -2,6 +2,7 @@ import { Formik, Form, Field } from "formik";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../../config";
 export default function Login() {
   const navigate = useNavigate();
   // const [serverRes, setServerRes] = useState(" ");
@@ -20,7 +21,7 @@ export default function Login() {
     const userData = { email, password };
     // console.log("sending user data", userData);
     try {
-      const response = await fetch("http://localhost:8082/api/users/login", {
+      const response = await fetch(`${BACKEND_URL}/api/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

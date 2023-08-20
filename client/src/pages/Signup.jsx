@@ -2,6 +2,7 @@ import { Formik, Form, Field } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
+import { BACKEND_URL } from "../../config";
 export default function Signup() {
   const navigate = useNavigate();
 
@@ -19,7 +20,7 @@ export default function Signup() {
     const userData = { email, password };
     // console.log("sending user data", userData);
     try {
-      const response = await fetch("http://localhost:8082/api/users/signup", {
+      const response = await fetch(`${BACKEND_URL}/api/users/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +34,7 @@ export default function Signup() {
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
-          navigate("/");
+          navigate("/login");
         }, 1000);
       } else {
         handleError(message);

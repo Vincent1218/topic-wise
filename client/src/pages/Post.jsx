@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import PieChart from "../components/Piechart";// Import your other components
+import PieChart from "../components/Piechart"; // Import your other components
 import Scores from "../components/Scores";
+import { BACKEND_URL } from "../../config";
 //... more components
 export default function PostPage() {
   const { userId, id } = useParams();
@@ -15,7 +16,7 @@ export default function PostPage() {
     const getPost = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8082/api/posts/${userId}/post/${id}`,
+          `${BACKEND_URL}/api/posts/${userId}/post/${id}`,
           {
             method: "GET",
             headers: {
@@ -24,7 +25,7 @@ export default function PostPage() {
           }
         );
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         if (response.ok) {
           setPost(data);
         } else {
@@ -74,7 +75,7 @@ export default function PostPage() {
             }`}
             onClick={() => setOption("component2")}
           >
-           Topic Outline{" "}
+            Topic Outline{" "}
           </button>
           {/* add more buttons for other components */}
         </div>
@@ -88,8 +89,10 @@ export default function PostPage() {
                   {/* Add any other post details you want to display here */}
                 </div>
               )}
-              {option === "component1" && <Scores postScores={post.scores}/>}
-              {option === "component2" && <PieChart disciplineData = {post.scores.disciplineMetrics} />}
+              {option === "component1" && <Scores postScores={post.scores} />}
+              {option === "component2" && (
+                <PieChart disciplineData={post.scores.disciplineMetrics} />
+              )}
               {/* Render more components based on the selected option */}
             </div>
           </div>
@@ -98,4 +101,3 @@ export default function PostPage() {
     </div>
   );
 }
-
