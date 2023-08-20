@@ -9,16 +9,30 @@ const userVerification = require("./middlewares/auth-middleware");
 const classifyRouter = require("./routes/api/classify");
 // middleware for parsing json objects
 app.use(express.json());
-app.use(cookieParser());
 app.use(express.static("public"));
-// routes
+
+// app.use(
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://askwaai.azurewebsites.net",
+  "https://askwaai.com",
+];
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
+app.use(cookieParser());
+
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 app.get("/api/verify", userVerification, (req, res) => {
