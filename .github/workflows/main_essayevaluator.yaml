@@ -36,7 +36,7 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: askwaai
+          name: essay-evalautor-app
           path: server
 
   deploy:
@@ -50,13 +50,13 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: askwaai
+          name: essay-evalautor-app
 
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "askwaai"
+          app-name: "essay-evalautor-app"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D01EBC2E58514AC5B5AD0D6A6798C299 }}
           package: .
