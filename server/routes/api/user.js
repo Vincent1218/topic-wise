@@ -41,7 +41,9 @@ router.post("/signup", async (req, res) => {
     //create a new user
 
     const user = await User.create({ email, password }); //save user to database
+    console.log("user", user)
     const token = createSecretToken(user._id);
+    console.log("token", token)
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,

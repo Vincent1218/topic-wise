@@ -40,7 +40,7 @@ app.get("/api/verify", userVerification, (req, res) => {
 app.use("/api/classify", classifyRouter);
 // start server
 const port = process.env.PORT || 8082;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, "0.0.0.0", () => console.log(`Listening on port ${port}...`));
 
 // connect to db
 try {
