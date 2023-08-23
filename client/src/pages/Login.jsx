@@ -10,9 +10,7 @@ export default function Login() {
   // const [serverRes, setServerRes] = useState(" ");
   const [showPassword, setShowPassword] = useState(false);
 
-
-
-  async function signup(email, password) {
+  async function login(email, password) {
     const userData = { email, password };
     // console.log("sending user data", userData);
     try {
@@ -76,7 +74,7 @@ export default function Login() {
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            signup(values.email, values.password);
+            login(values.email, values.password);
             setSubmitting(false);
           }}
         >

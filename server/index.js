@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 const app = express();
 const connectDB = require("./config/db");
 const postRouter = require("./routes/api/posts");
@@ -10,12 +11,13 @@ const classifyRouter = require("./routes/api/classify");
 // middleware for parsing json objects
 app.use(express.json());
 app.use(express.static("public"));
+app.use(cookieParser());
 
 // app.use(
 const allowedOrigins = [
   "http://localhost:5173",
   "https://essay-evaluator-app.azurewebsites.net",
-  "http://essay-evalautor-app.azurewebsites.net",
+  "http://essay-evaltuaor-app.azurewebsites.net",
 ];
 app.use(
   cors({
@@ -34,7 +36,6 @@ app.use(
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "public", "index.html"));
 });
-app.use(cookieParser());
 
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);

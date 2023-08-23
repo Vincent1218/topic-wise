@@ -20,6 +20,7 @@ export default function Signup() {
           "Access-Control-Allow-Headers":
             "Content-Type, Access-Control-Allow-Headers, X-Requested-With, Authorization",
         },
+        
         body: JSON.stringify(userData),
       });
       const data = await response.json();
