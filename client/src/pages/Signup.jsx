@@ -1,21 +1,14 @@
-import { Formik, Form, Field } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Formik, Form, Field } from "formik";
+import { ToastContainer } from "react-toastify";
+
 import { BACKEND_URL } from "../../config";
+import { handleSuccess, handleError } from "./../utils/ToastFunctions.js";
 export default function Signup() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-  const handleError = (err) =>
-    toast.error(err, {
-      position: "bottom-left",
-    });
-  const handleSuccess = (msg) =>
-    toast.success(msg, {
-      position: "bottom-right",
-    });
-
   async function signup(email, password) {
     const userData = { email, password };
     // console.log("sending user data", userData);

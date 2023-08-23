@@ -15,6 +15,7 @@ app.use(express.static("public"));
 const allowedOrigins = [
   "http://localhost:5173",
   "https://essay-evaluator-app.azurewebsites.net",
+  "http://essay-evalautor-app.azurewebsites.net",
 ];
 app.use(
   cors({
@@ -30,6 +31,9 @@ app.use(
     credentials: true,
   })
 );
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public", "index.html"));
+});
 app.use(cookieParser());
 
 app.use("/api/users", userRouter);
