@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const { createSecretToken } = require("./../../util/JWTToken");
+const userVerification = require("./../../middlewares/auth-middleware");
 
 const router = express.Router();
 
@@ -41,9 +42,9 @@ router.post("/signup", async (req, res) => {
     //create a new user
 
     const user = await User.create({ email, password }); //save user to database
-    console.log("user", user)
+    console.log("user", user);
     const token = createSecretToken(user._id);
-    console.log("token", token)
+    console.log("token", token);
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
@@ -93,5 +94,8 @@ router.post("/login", async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Error while logging in" });
   }
+});
+router.get("/verify", userVerification, (req, res) => {
+  res.status(200).json({ status: true, user: req.user });
 });
 module.exports = router;

@@ -20,7 +20,7 @@ const Home = () => {
       if (!cookies.token) {
         navigate("/login");
       }
-      const response = await fetch(`${BACKEND_URL}/api/verify`, {
+      const response = await fetch(`${BACKEND_URL}/api/users/verify`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

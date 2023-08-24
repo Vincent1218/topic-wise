@@ -6,7 +6,6 @@ const app = express();
 const connectDB = require("./config/db");
 const postRouter = require("./routes/api/posts");
 const userRouter = require("./routes/api/user");
-const userVerification = require("./middlewares/auth-middleware");
 const classifyRouter = require("./routes/api/classify");
 // middleware for parsing json objects
 app.use(express.json());
@@ -33,9 +32,7 @@ app.use(
     credentials: true,
   })
 );
-app.get("/api/verify", userVerification, (req, res) => {
-  res.status(200).json({ status: true, user: req.user });
-});
+
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 
