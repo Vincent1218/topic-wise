@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import { BACKEND_URL } from "../../config";
+import { handleError } from "../utils/ToastFunctions";
 export default function UploadFile({ setUploadedNew, userId }) {
   const [created, setCreated] = useState(false);
   const [analysed, setAnalysed] = useState(false);
@@ -24,34 +25,47 @@ export default function UploadFile({ setUploadedNew, userId }) {
     onSubmit: async (values) => {
       setLoading(true);
       console.log("values", values);
-      const response = await fetch(`${BACKEND_URL}/api/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          post: {
-            title: values.title,
-            content: values.content,
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/posts`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        }),
-      });
-      setCreated(true);
-      const data = await response.json();
-      console.log("data", data);
-      const { postId } = data; // Once the post is created, then call your classification API
-      const classifyResponse = await fetch(`${BACKEND_URL}/api/classify`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          postId: postId,
-          content: values.content,
-        }),
-      });
+          body: JSON.stringify({
+            userId: userId,
+            post: {
+              title: values.title,
+              content: values.content,
+            },
+          }),
+        });
+        setCreated(true);
+        const data = await response.json();
+        console.log("data", data);
+        const { postId } = data;
+        try {
+          const classifyResponse = await fetch(`${BACKEND_URL}/api/classify`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: userId,
+              postId: postId,
+              content: values.content,
+            }),
+          });
+          const classifyData = await classifyResponse.json();
+          if (!classifyData.success) {
+            handleError(classifyData.message);
+          }
+        } catch (err) {
+          handleError(err.message);
+        }
+      } catch (err) {
+        handleError(err.message);
+      }
+      // Once the post is created, then call your classification API
 
       // const classifyData = await classifyResponse.json();
       setAnalysed(true);
@@ -126,6 +140,7 @@ export default function UploadFile({ setUploadedNew, userId }) {
         <div className="flex items-center align-middle">
           {loading ? (
             <ul className="max-w-md space-y-2 text-gray-500 list-inside dark:text-gray-400">
+              {" "}
               <li className="flex items-center">
                 {!created ? (
                   <div role="status">
@@ -193,7 +208,7 @@ export default function UploadFile({ setUploadedNew, userId }) {
                   </svg>
                 )}
                 Analyzing Text{" "}
-              </li>
+              </li>{" "}
             </ul>
           ) : (
             <button

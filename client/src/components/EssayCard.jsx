@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 
 export default function EssayCard({ userId, post }) {
   const contentPreview = post.content.slice(0, 150) + "...";
+  if(!post.scores) return null;
   const postScores = post.scores.essayMetrics;
+
   return (
     <Link to={`${userId}/post/${post._id}`}>
       <div className="max-w-md  bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-3">

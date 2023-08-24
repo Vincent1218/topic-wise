@@ -10,8 +10,7 @@ const headers = {
 };
 
 const disciplines = ["technology", "business", "science", "humanities"];
-const disciplineCounts = {};
-disciplines.forEach((discipline) => (disciplineCounts[discipline] = 0));
+
 // Custom rounding function to round to a specific number of decimal places
 function roundDecimal(num, places) {
   const rounded = Math.round(num * 10 ** places) / 10 ** places;
@@ -29,6 +28,9 @@ const query = async (sentence) => {
 };
 
 router.post("/", async (req, res) => {
+  const disciplineCounts = {};
+  disciplines.forEach((discipline) => (disciplineCounts[discipline] = 0));
+
   try {
     const { postId, userId, content } = req.body;
     // assuming paragraphs are separated by two newline characters
@@ -39,14 +41,17 @@ router.post("/", async (req, res) => {
 
     for (const paragraph of paragraphs) {
       const sentences = paragraph.split(/(?<=[.!?])\s+(?=[A-Z])/);
-      // keeping track of disciplines in current paragraph
       const currentParagraphDisciplines = new Set();
-      for (const sentence of sentences) {
-        const result = await query(sentence);
+
+      // Create an array of promises
+      const promises = sentences.map((sentence) => query(sentence));
+
+      // Await all promises to resolve
+      const results = await Promise.all(promises);
+
+      for (const result of results) {
         const maxScore = result.scores[0];
-        // Loop over all labels and scores
         for (let i = 0; i < result.labels.length; i++) {
-          // Check if the score is within 50% of the max score
           if (result.scores[i] >= 0.6 * maxScore) {
             const discipline = result.labels[i];
             disciplineCounts[discipline] += 1;
@@ -120,14 +125,37 @@ router.post("/", async (req, res) => {
       };
     });
     //updating backend
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).send("User not found");
+    let user;
+    try {
+      user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).send({
+          success: false,
+          message: "User not found",
+        });
+      }
+    } catch (dbError) {
+      console.error("Database Error:", dbError);
+      return res.status(500).send({
+        success: false,
+        message: "Error retrieving user from the database.",
+      });
     }
-
-    const post = user.posts.id(postId);
-    if (!post) {
-      return res.status(404).send("Post not found");
+    let post;
+    try {
+      post = user.posts.id(postId);
+      if (!post) {
+        return res.status(404).send({
+          success: false,
+          message: "Post not found",
+        });
+      }
+    } catch (dbError) {
+      console.error("Database Error:", dbError);
+      return res.status(500).send({
+        success: false,
+        message: "Error retrieving post from the database.",
+      });
     }
 
     // Append the scores to the post
@@ -137,10 +165,13 @@ router.post("/", async (req, res) => {
     await user.save();
 
     // Return a success response
-    res.json({ message: "Scores saved successfully." });
+    res.json({ success: true, message: "Scores saved successfully." });
   } catch (err) {
     console.log(err);
-    res.status(500).send("Internal server error");
+    res.status(500).send({
+      success: false,
+      message: "Error classifying post." + err,
+    });
   }
 });
 
