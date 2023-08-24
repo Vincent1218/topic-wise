@@ -29,7 +29,7 @@ const Home = () => {
       });
       const data = await response.json();
       const { status, user } = data;
-      // console.log(data);
+      console.log(data);
       setUsername(user.email);
       setUserId(user._id);
       return status

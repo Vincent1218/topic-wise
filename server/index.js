@@ -17,7 +17,7 @@ app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173",
   "https://essay-evaluator-app.azurewebsites.net",
-  "http://essay-evaltuaor-app.azurewebsites.net",
+  "http://essay-evaluator-app.azurewebsites.net",
 ];
 app.use(
   cors({
@@ -33,16 +33,18 @@ app.use(
     credentials: true,
   })
 );
+app.get("/api/verify", userVerification, (req, res) => {
+  res.status(200).json({ status: true, user: req.user });
+});
+app.use("/api/users", userRouter);
+app.use("/api/posts", postRouter);
+
+app.use("/api/classify", classifyRouter);
+
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "public", "index.html"));
 });
 
-app.use("/api/users", userRouter);
-app.use("/api/posts", postRouter);
-app.get("/api/verify", userVerification, (req, res) => {
-  res.status(200).json({ status: true, user: req.user });
-});
-app.use("/api/classify", classifyRouter);
 // start server
 const port = process.env.PORT || 8082;
 app.listen(port, "0.0.0.0", () => console.log(`Listening on port ${port}...`));
